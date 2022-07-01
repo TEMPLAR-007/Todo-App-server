@@ -58,6 +58,18 @@ async function run() {
         });
 
 
+        app.put('/task/done/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const updateDoc = {
+                $set: { role: 'done' }
+            };
+            const result = await TaskCollection.updateOne(filter, updateDoc);
+
+            res.send(result);
+        });
+
+
         app.get('/donetask', async (req, res) => {
             const role = req.query.role;
             const query = { role: role };
